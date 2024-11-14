@@ -5,9 +5,9 @@
 ❗️Exclamation Marks ❗️indicate action items; you should remove these emoji as you complete/update the items which 
   they accompany. (This means that your final README should have no ❗️in it!)
 
-❗️**Author(s)**: Your name(s) here
+❗️**Author(s)**: Dylan Roland
 
-❗️**Google Doc Link**: Your link here
+❗️**Google Doc Link**: https://docs.google.com/document/d/1oH4hJl-JlcDOZQ5CA6M9rhFbbVT4kVvCcT-8QZkdfXY/edit?tab=t.0#heading=h.qg98s23ap4mh
 
 ---
 
@@ -20,11 +20,14 @@ helped you, AI tools you've used, and any other resources that are not solely yo
 
 ## Milestone 1: Setup, Planning, Design
 
-❗️**Title**: `What is the title of your project? Be creative! Replace this block of text.`
+❗️**Title**: `SafePass: AI-Enhanced Password Manager.`
 
-❗**Purpose**: `In a single sentence, describe WHAT your project will do. Replace this block of text.`
+❗**Purpose**: `SafePass is a password management tool that analyzes the strength of user passwords, offers suggestions for improvement, and securely stores passwords`
 
-❗️**Source Assignment(s)**: `List which original assignments you will base your project on? Replace this block of text.`
+❗️**Source Assignment(s)**: `File handling (for saving passwords)
+                            Dictionaries and Lists (for storing password rules and categorizing passwords)
+                            GUI basics (for making the user interface interactive with Tkinter or Pygame)
+                            Classes and Objects (to manage user accounts, passwords, and password rules)' 
 
 ❗️**CRC Card(s)**:
   - Create a CRC card for each class that your project will implement.
@@ -34,7 +37,7 @@ helped you, AI tools you've used, and any other resources that are not solely yo
     README. You can do this by saving an image in the repository and linking to it. See the sample CRC card below - 
     and REPLACE it with your own:
   
-![Don't leave me in your README!](image/crc.png "Image of CRC card as an example. Upload your CRC card(s) in place of this one. ")
+![img.png](image/img.png) ![img_1.png](image/img_1.png) ![img_2.png](image/img_2.png)![img_3.png](image/img_3.png)
 
 ❗️**Branches**: This project will **require** effective use of git. 
 
@@ -43,7 +46,7 @@ branch) as they work. When you need to bring each others branches together, do s
 into your own, following the process we've discussed in previous assignments: 
 
 ```
-    Branch 1 name: _____________
+    Branch 1 name: rolandd
     Branch 2 name: _____________
 ```
 ---
