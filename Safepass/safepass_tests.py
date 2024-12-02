@@ -13,10 +13,45 @@ class TestUserAccount(unittest.TestCase):
         account = UserAccount("testuser", "testpassword")
         self.assertIsNone(account.decrypt_password("encryptedpassword"))
 
-class TestPasswordManager(unittest.TestCase):
+
+    class TestPasswordManager(unittest.TestCase):
+        def setUp(self):
+            self.manager = PasswordManager()
+
     def test_add_password(self):
-        manager = PasswordManager()
-        self.assertIsNone(manager.add_password("testsite", "testpassword"))
+        self.manager.add_password("example.com", "password123", "Work")
+        self.assertEqual(self.manager.retrieve_password("example.com"), "password123")
+
+    def test_remove_password(self):
+        self.manager.add_password("example.com", "password123")
+        self.assertTrue(self.manager.remove_password("example.com"))
+        self.assertIsNone(self.manager.retrieve_password("example.com"))
+
+    def test_retrieve_password(self):
+        self.manager.add_password("example.com", "password123")
+        self.assertEqual(self.manager.retrieve_password("example.com"), "password123")
+        self.assertIsNone(self.manager.retrieve_password("nonexistent.com"))
+
+    def test_categorize_password(self):
+        self.manager.add_password("example.com", "password123")
+        self.assertTrue(self.manager.categorize_password("example.com", "Work"))
+        self.assertEqual(self.manager.get_passwords_by_category("Work"), ["example.com"])
+
+    def test_get_passwords_by_category(self):
+        self.manager.add_password("example.com", "password123", "Work")
+        self.manager.add_password("personal.com", "mypassword", "Personal")
+        self.assertEqual(self.manager.get_passwords_by_category("Work"), ["example.com"])
+        self.assertEqual(self.manager.get_passwords_by_category("Personal"), ["personal.com"])
+        self.assertEqual(self.manager.get_passwords_by_category("Nonexistent"), [])
+
+    def test_list_all_passwords(self):
+        self.manager.add_password("example.com", "password123")
+        self.manager.add_password("personal.com", "mypassword")
+        self.assertEqual(len(self.manager.list_all_passwords()), 2)
+
+    if __name__ == "__main__":
+        unittest.main()
+
 
 class TestPasswordStrengthAnalyzer(unittest.TestCase):
     class TestPasswordStrengthAnalyzer(unittest.TestCase):
