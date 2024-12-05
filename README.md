@@ -59,7 +59,9 @@ Reflect on what you’ve done so far. How’s it going? Are you feeling behind/a
 What has surprised you so far? Describe your general feelings. Be honest with yourself; this section is for you, not me.
 
 ```
-    **Replace this text with your reflection
+    So far, the project feels manageable, but there are a lot of moving parts to coordinate. I feel like I’m slightly behind because I underestimated how much time it would take to properly stub out all functions and build a cohesive plan. I’m a little worried about the integration between the modules, especially ensuring the encryption and password manager work seamlessly together.
+
+What surprised me the most is how much clarity writing out the top-down design brought to the process. Breaking tasks into smaller parts has made implementation feel less overwhelming. Overall, I’m cautiously optimistic but know there’s a lot left to do.
 ```
 
 ---
@@ -75,7 +77,16 @@ Indicate what percentage of the project you have left to complete and how confid
   before the deadline.
 
 ```
-    **Replace this text with your reflection
+    I feel moderately confident about completing the project. The main challenges will be:
+
+Implementing the encryption and persistent storage effectively.
+Debugging any issues with the user interface flow.
+To increase the likelihood of success, I plan to:
+
+Stick to the incremental development strategy, focusing on one module or feature at a time.
+Commit frequently to track progress and prevent getting overwhelmed by large changes.
+Dedicate specific blocks of time each day to work on the project, ensuring consistent progress.
+With these strategies in place, I’m confident I’ll finish before the deadline.
 ```
 
 ---
