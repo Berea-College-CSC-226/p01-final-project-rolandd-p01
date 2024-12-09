@@ -11,21 +11,52 @@ class TestUserAccount(unittest.TestCase):
         self.account = UserAccount("testuser", "testpassword")
 
     def test_encrypt_decrypt_password(self):
+        """Test that encrypting and decrypting a password returns the original password."""
         encrypted = self.account.encrypt_password("mypassword")
         decrypted = self.account.decrypt_password(encrypted)
         self.assertEqual(decrypted, "mypassword")
 
+    def test_encrypt_password_is_not_plaintext(self):
+        """Test that encrypted passwords are different from the original."""
+        plaintext_password = "mypassword"
+        encrypted_password = self.account.encrypt_password(plaintext_password)
+        self.assertNotEqual(encrypted_password, plaintext_password)
+
     def test_save_password(self):
+        """Test that passwords are saved properly and encrypted."""
         self.assertTrue(self.account.save_password("example.com", "securePass123"))
         self.assertIn("example.com", self.account.passwords)
 
     def test_retrieve_password(self):
+        """Test that passwords can be retrieved correctly."""
         self.account.save_password("example.com", "securePass123")
         retrieved_password = self.account.retrieve_password("example.com")
         self.assertEqual(retrieved_password, "securePass123")
 
     def test_retrieve_nonexistent_password(self):
+        """Test that retrieving a non-existent password returns None."""
         self.assertIsNone(self.account.retrieve_password("nonexistent.com"))
+
+    def test_remove_password(self):
+        """Test that passwords can be removed."""
+        self.account.save_password("example.com", "securePass123")
+        self.assertTrue(self.account.remove_password("example.com"))
+        self.assertIsNone(self.account.retrieve_password("example.com"))
+
+    def test_list_sites(self):
+        """Test that list_sites correctly lists all sites with stored passwords."""
+        self.account.save_password("example.com", "securePass123")
+        self.account.save_password("another.com", "Password456")
+        self.assertEqual(set(self.account.list_sites()), {"example.com", "another.com"})
+
+    def test_wrong_key_decryption(self):
+        """Test that decryption with a different key fails."""
+        encrypted = self.account.encrypt_password("mypassword")
+        original_load_key = UserAccount.load_encryption_key
+        UserAccount.load_encryption_key = lambda: b'wrongkeywrongkeywrongkeywronk'
+        with self.assertRaises(Exception):
+            self.account.decrypt_password(encrypted)
+        UserAccount.load_encryption_key = original_load_key
 
 
 # PasswordManager Tests
