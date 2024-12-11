@@ -1,6 +1,8 @@
 import os
 import json
 import bcrypt
+import tkinter as tk
+from tkinter import messagebox
 from cryptography.fernet import Fernet
 from user_account import UserAccount
 from password_manager import PasswordManager
@@ -46,105 +48,125 @@ def save_user_data(user_data):
         file.write(encrypted_data)
 
 
-def main():
-    print("Welcome to SafePass - Your Secure Password Manager")
-    print("-------------------------------------------------")
+class SafePassGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("SafePass - Your Secure Password Manager")
+        self.user_data = load_user_data()
+        self.account = None
+        self.password_manager = PasswordManager()
+        self.main_menu()
 
-    # Initialize components
-    user_data = load_user_data()
-    account = None
-    password_manager = PasswordManager()
-    analyzer = PasswordStrengthAnalyzer()
-    generator = AIPasswordGenerator()
+    def clear_window(self):
+        """Clears all widgets from the root window."""
+        for widget in self.root.winfo_children():
+            widget.destroy()
 
-    while True:
-        print("\nMenu:")
-        print("1. Create a New Account")
-        print("2. Log In")
-        print("3. Add a Password")
-        print("4. Retrieve a Password")
-        print("5. Analyze Password Strength")
-        print("6. Generate a Secure Password")
-        print("7. Exit")
+    def main_menu(self):
+        """Main menu with options to login, register, or exit."""
+        self.clear_window()
+        tk.Label(self.root, text="Welcome to SafePass", font=("Arial", 24)).pack(pady=20)
+        tk.Button(self.root, text="Login", command=self.login_screen, width=20).pack(pady=10)
+        tk.Button(self.root, text="Register", command=self.register_screen, width=20).pack(pady=10)
+        tk.Button(self.root, text="Exit", command=self.root.quit, width=20).pack(pady=10)
 
-        choice = input("Enter your choice: ")
+    def login_screen(self):
+        """Login screen for user to enter username and password."""
+        self.clear_window()
+        tk.Label(self.root, text="Login", font=("Arial", 24)).pack(pady=20)
+        tk.Label(self.root, text="Username:").pack()
+        username_entry = tk.Entry(self.root)
+        username_entry.pack()
+        tk.Label(self.root, text="Password:").pack()
+        password_entry = tk.Entry(self.root, show="*")
+        password_entry.pack()
+        tk.Button(self.root, text="Login", command=lambda: self.login(username_entry.get(), password_entry.get())).pack(pady=10)
+        tk.Button(self.root, text="Back", command=self.main_menu).pack()
 
-        if choice == "1":
-            # Create a new user account
-            username = input("Enter a new username: ")
-            if username in user_data:
-                print("Username already exists. Please choose a different username.")
-                continue
-            password = input("Enter a secure master password: ")
-            hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
-            user_data[username] = {'password': hashed_password.decode()}
-            save_user_data(user_data)
-            print(f"Account for {username} created successfully!")
+    def register_screen(self):
+        """Registration screen for new users to create an account."""
+        self.clear_window()
+        tk.Label(self.root, text="Register", font=("Arial", 24)).pack(pady=20)
+        tk.Label(self.root, text="Username:").pack()
+        username_entry = tk.Entry(self.root)
+        username_entry.pack()
+        tk.Label(self.root, text="Password:").pack()
+        password_entry = tk.Entry(self.root, show="*")
+        password_entry.pack()
+        tk.Button(self.root, text="Register", command=lambda: self.register(username_entry.get(), password_entry.get())).pack(pady=10)
+        tk.Button(self.root, text="Back", command=self.main_menu).pack()
 
-        elif choice == "2":
-            # Log in to an existing account
-            username = input("Enter your username: ")
-            password = input("Enter your master password: ")
-            if username in user_data:
-                stored_hashed_password = user_data[username]['password'].encode()
-                if bcrypt.checkpw(password.encode(), stored_hashed_password):
-                    account = UserAccount(username, password)
-                    print(f"Welcome back, {username}!")
-                else:
-                    print("Invalid password. Please try again.")
+    def login(self, username, password):
+        """Login user and load dashboard if successful."""
+        if username in self.user_data:
+            stored_hashed_password = self.user_data[username]['password'].encode()
+            if bcrypt.checkpw(password.encode(), stored_hashed_password):
+                self.account = UserAccount(username, password)
+                messagebox.showinfo("Login Successful", f"Welcome, {username}!")
+                self.dashboard()
             else:
-                print("Username does not exist. Please create an account first.")
-
-        elif choice == "3":
-            # Add a password to the manager
-            if account:
-                site = input("Enter the site name: ")
-                password = input("Enter the password to save: ")
-                password_manager.add_password(site, password)
-                print(f"Password for {site} saved successfully!")
-            else:
-                print("Please log in first.")
-
-        elif choice == "4":
-            # Retrieve a password from the manager
-            if account:
-                site = input("Enter the site name to retrieve the password: ")
-                password = password_manager.retrieve_password(site)
-                if password:
-                    print(f"Password for {site}: {password}")
-                else:
-                    print(f"No password found for {site}.")
-            else:
-                print("Please log in first.")
-
-        elif choice == "5":
-            # Analyze password strength
-            password = input("Enter a password to analyze: ")
-            result = analyzer.analyze_strength(password)
-            print(f"Password Strength: {result['strength']}")
-            if result["issues"]:
-                print("Issues:")
-                for issue in result["issues"]:
-                    print(f"- {issue}")
-
-        elif choice == "6":
-            # Generate a secure password
-            try:
-                length = int(input("Enter desired password length (default is 12): "))
-            except ValueError:
-                length = 12
-            include_special = input("Include special characters? (y/n): ").lower() == "y"
-            generated_password = generator.generate_password(length=length, include_special=include_special)
-            print(f"Generated Password: {generated_password}")
-
-        elif choice == "7":
-            # Exit the program
-            print("Thank you for using SafePass. Goodbye!")
-            break
-
+                messagebox.showerror("Login Failed", "Invalid password.")
         else:
-            print("Invalid choice. Please try again.")
+            messagebox.showerror("Login Failed", "Username does not exist.")
+
+    def register(self, username, password):
+        """Register a new user account."""
+        if username in self.user_data:
+            messagebox.showerror("Error", "Username already exists.")
+        else:
+            hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+            self.user_data[username] = {'password': hashed_password.decode()}
+            save_user_data(self.user_data)
+            messagebox.showinfo("Registration Successful", f"Account for {username} created successfully!")
+            self.dashboard()
+
+    def dashboard(self):
+        """Dashboard with options to add, retrieve, and view passwords."""
+        self.clear_window()
+        tk.Label(self.root, text="Dashboard", font=("Arial", 24)).pack(pady=20)
+        tk.Button(self.root, text="Add Password", command=self.add_password_screen, width=20).pack(pady=10)
+        tk.Button(self.root, text="Retrieve Password", command=self.retrieve_password_screen, width=20).pack(pady=10)
+        tk.Button(self.root, text="Logout", command=self.main_menu, width=20).pack(pady=10)
+
+    def add_password_screen(self):
+        """Screen to add a password for a site."""
+        self.clear_window()
+        tk.Label(self.root, text="Add Password", font=("Arial", 24)).pack(pady=20)
+        tk.Label(self.root, text="Site:").pack()
+        site_entry = tk.Entry(self.root)
+        site_entry.pack()
+        tk.Label(self.root, text="Password:").pack()
+        password_entry = tk.Entry(self.root, show="*")
+        password_entry.pack()
+        tk.Button(self.root, text="Save", command=lambda: self.save_password(site_entry.get(), password_entry.get())).pack(pady=10)
+        tk.Button(self.root, text="Back", command=self.dashboard).pack()
+
+    def retrieve_password_screen(self):
+        """Screen to retrieve a password for a specific site."""
+        self.clear_window()
+        tk.Label(self.root, text="Retrieve Password", font=("Arial", 24)).pack(pady=20)
+        tk.Label(self.root, text="Site:").pack()
+        site_entry = tk.Entry(self.root)
+        site_entry.pack()
+        tk.Button(self.root, text="Retrieve", command=lambda: self.retrieve_password(site_entry.get())).pack(pady=10)
+        tk.Button(self.root, text="Back", command=self.dashboard).pack()
+
+    def save_password(self, site, password):
+        """Save a password for a site."""
+        self.password_manager.add_password(site, password)
+        messagebox.showinfo("Success", f"Password for {site} saved successfully!")
+        self.dashboard()
+
+    def retrieve_password(self, site):
+        """Retrieve a password for a site."""
+        password = self.password_manager.retrieve_password(site)
+        if password:
+            messagebox.showinfo("Password Retrieved", f"Password for {site}: {password}")
+        else:
+            messagebox.showerror("Error", "No password found for this site.")
 
 
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    app = SafePassGUI(root)
+    root.mainloop()
