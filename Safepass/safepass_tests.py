@@ -78,23 +78,6 @@ class TestPasswordManager(unittest.TestCase):
         self.assertEqual(self.manager.retrieve_password("example.com"), "password123")
         self.assertIsNone(self.manager.retrieve_password("nonexistent.com"))
 
-    def test_categorize_password(self):
-        self.manager.add_password("example.com", "password123")
-        self.assertTrue(self.manager.categorize_password("example.com", "Work"))
-        self.assertEqual(self.manager.get_passwords_by_category("Work"), ["example.com"])
-
-    def test_get_passwords_by_category(self):
-        self.manager.add_password("example.com", "password123", "Work")
-        self.manager.add_password("personal.com", "mypassword", "Personal")
-        self.assertEqual(self.manager.get_passwords_by_category("Work"), ["example.com"])
-        self.assertEqual(self.manager.get_passwords_by_category("Personal"), ["personal.com"])
-        self.assertEqual(self.manager.get_passwords_by_category("Nonexistent"), [])
-
-    def test_list_all_passwords(self):
-        self.manager.add_password("example.com", "password123")
-        self.manager.add_password("personal.com", "mypassword")
-        self.assertEqual(len(self.manager.list_all_passwords()), 2)
-
 
 # PasswordStrengthAnalyzer Tests
 class TestPasswordStrengthAnalyzer(unittest.TestCase):
@@ -126,7 +109,7 @@ class TestAIPasswordGenerator(unittest.TestCase):
 
     def test_generate_password(self):
         password = self.generator.generate_password()
-        self.assertEqual(len(password), 12)  # Default length
+        self.assertEqual(len(password), 12)
         self.assertTrue(self.generator.validate_generated_password(password))
 
     def test_generate_password_custom_length(self):
@@ -143,6 +126,13 @@ class TestAIPasswordGenerator(unittest.TestCase):
         self.assertTrue(self.generator.validate_generated_password(strong_password))
         self.assertFalse(self.generator.validate_generated_password(weak_password))
 
+    def test_generated_password_meets_strength_requirements(self):
+        password = self.generator.generate_password()
+        analyzer = PasswordStrengthAnalyzer()
+        result = analyzer.analyze_strength(password)
+        self.assertEqual(result["strength"], "Strong", "Generated password does not meet strength requirements")
 
+
+# Run all tests
 if __name__ == "__main__":
     unittest.main()

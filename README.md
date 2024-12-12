@@ -1,13 +1,8 @@
-# ❗CSC226 Final Project
 
-## Instructions
 
-❗️Exclamation Marks ❗️indicate action items; you should remove these emoji as you complete/update the items which 
-  they accompany. (This means that your final README should have no ❗️in it!)
+Dylan Roland
 
-❗️**Author(s)**: Dylan Roland
-
-❗️**Google Doc Link**: https://docs.google.com/document/d/1oH4hJl-JlcDOZQ5CA6M9rhFbbVT4kVvCcT-8QZkdfXY/edit?tab=t.0#heading=h.qg98s23ap4mh
+https://docs.google.com/document/d/1oH4hJl-JlcDOZQ5CA6M9rhFbbVT4kVvCcT-8QZkdfXY/edit?tab=t.0#heading=h.qg98s23ap4mh
 
 ---
 
@@ -20,34 +15,22 @@ helped you, AI tools you've used, and any other resources that are not solely yo
 
 ## Milestone 1: Setup, Planning, Design
 
-❗️**Title**: `SafePass: AI-Enhanced Password Manager.`
+`SafePass: AI-Enhanced Password Manager.`
 
-❗**Purpose**: `SafePass is a password management tool that analyzes the strength of user passwords, offers suggestions for improvement, and securely stores passwords`
+`SafePass is a password management tool that analyzes the strength of user passwords, offers suggestions for improvement, and securely stores passwords`
 
-❗️**Source Assignment(s)**: `File handling (for saving passwords)
-                            Dictionaries and Lists (for storing password rules and categorizing passwords)
-                            GUI basics (for making the user interface interactive with Tkinter or Pygame)
-                            Classes and Objects (to manage user accounts, passwords, and password rules)' 
+File handling (for saving passwords)
+Dictionaries and Lists (for storing password rules and categorizing passwords) 
+GUI basics (for making the user interface interactive with Tkinter or Pygame)
+Classes and Objects (to manage user accounts, passwords, and password rules)' 
 
-❗️**CRC Card(s)**:
-  - Create a CRC card for each class that your project will implement.
-  - See this link for a sample CRC card and a template to use for your own cards (you will have to make a copy to edit):
-    [CRC Card Example](https://docs.google.com/document/d/1JE_3Qmytk_JGztRqkPXWACJwciPH61VCx3idIlBCVFY/edit?usp=sharing)
-  - Tables in markdown are not easy, so we suggest saving your CRC card as an image and including the image(s) in the 
-    README. You can do this by saving an image in the repository and linking to it. See the sample CRC card below - 
-    and REPLACE it with your own:
-  
+
 ![img.png](image/img.png) ![img_1.png](image/img_1.png) ![img_2.png](image/img_2.png)![img_3.png](image/img_3.png)
 
-❗️**Branches**: This project will **require** effective use of git. 
 
-Each partner should create a branch at the beginning of the project, and stay on this branch (or branches of their 
-branch) as they work. When you need to bring each others branches together, do so by merging each other's branches 
-into your own, following the process we've discussed in previous assignments: 
 
 ```
     Branch 1 name: rolandd
-    Branch 2 name: _____________
 ```
 ---
 
@@ -70,11 +53,8 @@ What surprised me the most is how much clarity writing out the top-down design b
 
 Indicate what percentage of the project you have left to complete and how confident you feel. 
 
-❗️**Completion Percentage**: `60%`
+ `60%`
 
-❗️**Confidence**: Describe how confident you feel about completing this project, and why. Then, describe some 
-  strategies you can employ to increase the likelihood that you'll be successful in completing this project 
-  before the deadline.
 
 ```
     I feel moderately confident about completing the project. The main challenges will be:
@@ -93,20 +73,12 @@ With these strategies in place, I’m confident I’ll finish before the deadlin
 
 ## Milestone 4: Final Code, Presentation, Demo
 
-### ❗User Instructions
-In a paragraph, explain how to use your program. Assume the user is starting just after they hit the "Run" button 
-in PyCharm. 
+After hitting the **"Run"** button in PyCharm, the **SafePass** program will open a graphical user interface (GUI) window. From the main menu, users can choose to **Login**, **Register**, or **Exit** the program. If you are a new user, click **Register**, then enter a username and a strong master password. Once registered, you will be redirected to the **Login screen**, where you can enter your credentials. Upon successful login, you will access the **Dashboard**, where you can manage your passwords. To **add a password**, click "Add Password," enter the site name and the password you want to save, and click **Save**. To **retrieve a password**, click "Retrieve Password," enter the site name, and the program will display the saved password. You can also log out at any time to return to the main menu. All passwords are **encrypted** before being saved and **decrypted** only when retrieved, ensuring maximum security.
 
-### ❗Errors and Constraints
-Every program has bugs or features that had to be scrapped for time. These bugs should be tracked in the issue queue. 
-You should already have a few items in here from the prior weeks. Create a new issue for any undocumented errors and 
-deficiencies that remain in your code. Bugs found that aren't acknowledged in the queue will be penalized.
+For my final project, I selected SafePass, a secure password manager, because I wanted to challenge myself with a project that combined concepts from cybersecurity, software engineering, and user interface design. This project gave me the opportunity to implement user authentication, encryption, password strength analysis, and GUI development. Password management is a real-world problem that affects everyday users, so building a tool like this allowed me to create something with practical value. It also gave me the chance to apply what I’ve learned about object-oriented programming (OOP), file handling, and data security, all while working on a project that felt meaningful.
 
-### ❗Reflection
-In three to four well-written paragraphs, address the following (at a minimum):
-- Why did you select the project that you did?
-- How closely did your final project reflect your initial design?
-- What did you learn from this process?
-- What was the hardest part of the final project?
-- What would you do differently next time, knowing what you know now?
-- (For partners) How well did you work with your partner? What made it go well? What made it challenging?
+The final version of SafePass closely reflected my initial design, but there were some changes along the way. Originally, I planned for a simple command-line interface (CLI) where users would log in, register, and manage their passwords using typed commands. However, as I worked on the project, I decided to upgrade the user experience by building a graphical user interface (GUI) with Tkinter. This change significantly improved the program's usability and made it feel more polished. I also added a password strength analyzer to give users feedback on how strong their passwords were, which wasn't part of my original design. While I accomplished all the core features I had planned, these additions made the final product more comprehensive and user-friendly.
+
+One of the biggest lessons I learned during this project was the importance of error handling and edge case management. Early on, I focused on implementing the "happy path" — where everything works perfectly — but I quickly realized how often things can go wrong. For example, missing files, incorrect inputs, and failed logins could crash the program. To address this, I implemented try/except blocks to handle these errors gracefully. I also learned the value of data security, especially when it came to password encryption. Using AES encryption (Fernet) to encrypt sensitive information and bcrypt to hash master passwords gave me insight into how secure applications manage user data. These experiences taught me how to design more robust, secure, and user-friendly applications.
+
+If I were to do this project again, I would start with a more structured approach to testing and modular design. Early on, I wrote large, complex functions, which became hard to manage as the project grew. Later, I had to refactor these into smaller, reusable methods. Next time, I would follow a test-driven development (TDD) approach by writing tests first and ensuring every feature works before moving on. This would help catch edge cases and security flaws earlier in the process. I would also add more automated testing to check for issues like file corruption, failed logins, and incorrect decryption. Finally, I would add user experience improvements, like allowing users to reset their master passwords or recover lost accounts. These changes would make the program more reliable, maintainable, and professional.
