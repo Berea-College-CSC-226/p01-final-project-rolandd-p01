@@ -127,15 +127,40 @@ class SafePassGUI:
             messagebox.showinfo("Registration Successful", f"Account for {username} created successfully!")
             self.dashboard()
 
+
     def dashboard(self):
         """Dashboard with options to add, retrieve, and view passwords."""
         self.clear_window()
         tk.Label(self.root, text="Dashboard", font=("Arial", 24)).pack(pady=20)
+        tk.Button(self.root, text="Analyze Password", command=self.analyze_password_screen, width=20).pack(pady=10)
         tk.Button(self.root, text="Add Password", command=self.add_password_screen, width=20).pack(pady=10)
         tk.Button(self.root, text="Retrieve Password", command=self.retrieve_password_screen, width=20).pack(pady=10)
         tk.Button(self.root, text="Delete Password", command=self.delete_password_screen, width=20).pack(pady=10)
         tk.Button(self.root, text="Generate Password", command=self.generate_password_screen, width=20).pack(pady=10)
         tk.Button(self.root, text="Logout", command=self.main_menu, width=20).pack(pady=10)
+
+    def analyze_password_screen(self):
+        """Screen to analyze password strength."""
+        self.clear_window()
+        tk.Label(self.root, text="Analyze Password Strength", font=("Arial", 24)).pack(pady=20)
+        tk.Label(self.root, text="Enter Password:").pack()
+        password_entry = tk.Entry(self.root, show="*")
+        password_entry.pack()
+        tk.Button(self.root, text="Analyze", command=lambda: self.analyze_password(password_entry.get())).pack(pady=10)
+        tk.Button(self.root, text="Back", command=self.dashboard).pack()
+
+    def analyze_password(self, password):
+        """Analyze password strength and display feedback to the user."""
+        result = self.password_analyzer.analyze_strength(password)
+        strength = result['strength']
+        issues = result['issues']
+
+        if strength == "Strong":
+            messagebox.showinfo("Password Strength", "Your password is strong! 🎉")
+        else:
+            # Display issues in a readable format
+            issue_message = "\n".join(issues)
+            messagebox.showwarning("Password Strength", f"Your password is {strength}.\n\nIssues:\n{issue_message}")
 
     def add_password_screen(self):
         """Screen to add a password for a site."""
