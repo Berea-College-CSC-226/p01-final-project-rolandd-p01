@@ -1,3 +1,21 @@
+######################################################################
+# Author: Dylan Roland
+# Username: rolandd
+#
+# Assignment: P01
+#
+# Purpose: This file contains unit tests for the SafePass project.
+#          It includes tests for the UserAccount, PasswordManager,
+#          PasswordStrengthAnalyzer, and AIPasswordGenerator classes
+#          to ensure proper functionality, security, and error handling.
+#
+######################################################################
+# Acknowledgements:
+#  Handled in safepass.py
+#
+####################################################################################
+
+
 import unittest
 from user_account import UserAccount
 from password_manager import PasswordManager

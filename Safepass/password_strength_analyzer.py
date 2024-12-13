@@ -1,3 +1,22 @@
+######################################################################
+# Author: Dylan Roland
+# Username: rolandd
+#
+# Assignment: P01
+#
+# Purpose: This module defines the PasswordStrengthAnalyzer class,
+#          which analyzes and evaluates the strength of user passwords.
+#          It provides feedback on improvements to ensure passwords
+#          meet security standards for length, character variety,
+#          and complexity.
+#
+######################################################################
+# Acknowledgements:
+#   Handled in safepass.py
+#
+####################################################################################
+
+
 class PasswordStrengthAnalyzer:
     def __init__(self):
         self.min_length = 8  # Minimum password length

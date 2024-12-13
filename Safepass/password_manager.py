@@ -1,3 +1,21 @@
+######################################################################
+# Author: Dylan Roland
+# Username: rolandd
+#
+# Assignment: P01
+#
+# Purpose: This module defines the PasswordManager class, which handles
+#          secure storage, encryption, and retrieval of site passwords.
+#          It includes methods to add, remove, categorize, and retrieve
+#          encrypted passwords.
+#
+######################################################################
+# Acknowledgements:
+#   Handled in safepass.py
+#
+####################################################################################
+
+
 import os
 from cryptography.fernet import Fernet
 

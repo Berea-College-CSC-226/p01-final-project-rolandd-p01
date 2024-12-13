@@ -1,3 +1,21 @@
+######################################################################
+# Author: Dylan Roland
+# Username: rolandd
+#
+# Assignment: P01
+#
+# Purpose: This module defines the AIPasswordGenerator class, which
+#          generates secure, random passwords and validates them for
+#          strength. The generator ensures passwords meet criteria for
+#          uppercase, lowercase, digits, and special characters.
+#
+######################################################################
+# Acknowledgements:
+#   Handled in safepass.py
+#
+####################################################################################
+
+
 import random
 import string
 

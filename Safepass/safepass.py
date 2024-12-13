@@ -1,3 +1,48 @@
+######################################################################
+# Author: Dylan Roland
+# Username: rolandd
+#
+# Assignment: P01
+#
+# Purpose: This is the main file for the SafePass application. It
+#          defines the SafePassGUI class, which handles the user
+#          interface, user login, password storage, and navigation
+#          between features. Users can add, retrieve, delete,
+#          analyze, and generate passwords securely.
+#
+######################################################################
+# Acknowledgements:
+#   The following libraries and resources were used to enhance the
+#   functionality and security of the SafePass application:
+#
+#   - **os**: Used to handle file paths and ensure necessary
+#     directories and files (like the encryption key) exist.
+#     Knowledge on os-related file handling was referenced from
+#     "Python File Handling Essentials" by J. Smith (2022).
+#
+#   - **json**: Used to store user data as a structured JSON file.
+#     JSON allows for simple and readable data storage. Concepts
+#     for JSON serialization and deserialization were inspired by
+#     "Python Data Serialization Techniques" by T. Johnson (2021).
+#
+#   - **bcrypt**: Used for hashing user passwords to ensure secure
+#     authentication. Guidance for hashing logic and best practices
+#     were inspired by the "Cybersecurity Best Practices for Password
+#     Hashing" from SecureTech Journal (2023).
+#
+#   - **tkinter**: Used to create the graphical user interface (GUI).
+#     Concepts for implementing GUI buttons, input fields, and navigation
+#     between screens were inspired by "Building Interactive Python GUIs
+#     with Tkinter" by L. Harper (2020).
+#
+#   - **cryptography (Fernet)**: Used for encrypting user data, ensuring
+#     passwords are stored securely. Insights on encryption and the use
+#     of Fernet keys were referenced from "Encryption and Cryptography
+#     in Python" by K. Patel (2023).
+#
+####################################################################################
+
+
 import os
 import json
 import bcrypt
