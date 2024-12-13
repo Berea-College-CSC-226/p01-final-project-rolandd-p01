@@ -55,6 +55,8 @@ class SafePassGUI:
         self.user_data = load_user_data()
         self.account = None
         self.password_manager = PasswordManager()
+        self.password_analyzer = PasswordStrengthAnalyzer()
+        self.password_generator = AIPasswordGenerator()
         self.main_menu()
 
     def clear_window(self):
@@ -102,6 +104,11 @@ class SafePassGUI:
             stored_hashed_password = self.user_data[username]['password'].encode()
             if bcrypt.checkpw(password.encode(), stored_hashed_password):
                 self.account = UserAccount(username, password)
+
+                # Ensure the 'passwords' key exists
+                if 'passwords' not in self.user_data[username]:
+                    self.user_data[username]['passwords'] = {}
+
                 messagebox.showinfo("Login Successful", f"Welcome, {username}!")
                 self.dashboard()
             else:
@@ -126,6 +133,8 @@ class SafePassGUI:
         tk.Label(self.root, text="Dashboard", font=("Arial", 24)).pack(pady=20)
         tk.Button(self.root, text="Add Password", command=self.add_password_screen, width=20).pack(pady=10)
         tk.Button(self.root, text="Retrieve Password", command=self.retrieve_password_screen, width=20).pack(pady=10)
+        tk.Button(self.root, text="Delete Password", command=self.delete_password_screen, width=20).pack(pady=10)
+        tk.Button(self.root, text="Generate Password", command=self.generate_password_screen, width=20).pack(pady=10)
         tk.Button(self.root, text="Logout", command=self.main_menu, width=20).pack(pady=10)
 
     def add_password_screen(self):
@@ -164,6 +173,47 @@ class SafePassGUI:
             messagebox.showinfo("Password Retrieved", f"Password for {site}: {password}")
         else:
             messagebox.showerror("Error", "No password found for this site.")
+
+    def delete_password_screen(self):
+        """Screen to delete a password for a specific site."""
+        self.clear_window()
+        tk.Label(self.root, text="Delete Password", font=("Arial", 24)).pack(pady=20)
+        tk.Label(self.root, text="Site:").pack()
+        site_entry = tk.Entry(self.root)
+        site_entry.pack()
+        tk.Button(self.root, text="Delete", command=lambda: self.delete_password(site_entry.get())).pack(pady=10)
+        tk.Button(self.root, text="Back", command=self.dashboard).pack()
+
+    def delete_password(self, site):
+        """Delete a password for a specific site."""
+        username = self.account.username  # Get the logged-in user's username
+
+        # Check if the current user has a 'passwords' key
+        if 'passwords' not in self.user_data[username]:
+            messagebox.showerror("Error", "No passwords have been saved for this user.")
+            return
+
+        # Strip any extra whitespace from site
+        site = site.strip()
+
+        # Check if the site exists in the user's password list
+        if site in self.user_data[username]['passwords']:
+            del self.user_data[username]['passwords'][site]  # Remove the password entry
+            save_user_data(self.user_data)  # Save the updated user data to file
+            messagebox.showinfo("Success", f"Password for {site} has been successfully deleted.")
+
+            # Print user data for debugging purposes (optional)
+            print(f"Updated passwords for {username}: {self.user_data[username]['passwords']}")
+        else:
+            messagebox.showerror("Error", f"No password found for {site}.")
+
+    def generate_password_screen(self):
+        """Screen to generate a password."""
+        self.clear_window()
+        password = self.password_generator.generate_password()
+        tk.Label(self.root, text="Generated Password", font=("Arial", 24)).pack(pady=20)
+        tk.Label(self.root, text=password, font=("Arial", 16)).pack(pady=20)
+        tk.Button(self.root, text="Back", command=self.dashboard).pack()
 
 
 if __name__ == "__main__":
